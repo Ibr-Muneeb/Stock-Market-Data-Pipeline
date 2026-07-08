@@ -1,19 +1,21 @@
-import psycopg
+import download_data
+import database
 
-connection = psycopg.connect(
-    host = 'localhost',
-    port = 5432,
-    dbname = 'market_data',
-    user='postgres',
-    password='password'
+connection = database.connect_db(
+    'localhost', 
+    '5432',
+    'market_data',
+    'postgres',
+    'password'
 )
 
-if connection:
-    print("Successfully connected to PostgreSQL!")
+data = download_data.download_stock_data(
+    "AAPL", 
+    "2025-01-01", 
+    "2025-07-01"
+) 
 
-cursor = connection.cursor()
+print(data.head())
 
-cursor.execute("SELECT * FROM prices;")
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
+database.close_db(connection)
+
