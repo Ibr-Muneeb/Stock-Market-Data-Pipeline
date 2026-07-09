@@ -9,14 +9,17 @@ connection = database.connect_db(
     'Password'
 )
 
-ticker = "AAPL"
-data = download_data.download_stock_data(
-    ticker, 
-    "2025-01-01", 
-    "2025-07-01"
-) 
+ticker_list = ["AAPL", "MSFT", "NVDA", "TSLA"]
 
-download_data.insert_price_data(connection, data, ticker)
+for ticker in ticker_list:
+    print(f"Download {ticker}...")
+    data = download_data.download_stock_data(
+        ticker, 
+        "2025-01-01", 
+        "2025-07-01"
+    ) 
+
+    download_data.insert_price_data(connection, data, ticker)
 
 
 database.close_db(connection)
