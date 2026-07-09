@@ -9,13 +9,15 @@ connection = database.connect_db(
     'password'
 )
 
+ticker = "AAPL"
 data = download_data.download_stock_data(
-    "AAPL", 
+    ticker, 
     "2025-01-01", 
     "2025-07-01"
 ) 
 
-print(data.head())
+download_data.insert_price_data(connection, data, ticker)
+
 
 database.close_db(connection)
 

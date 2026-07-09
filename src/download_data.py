@@ -8,3 +8,44 @@ def download_stock_data(ticker, start_date, end_date):
     )
 
     return data
+
+def insert_price_data(connection, data, ticker): 
+    cursor = connection.cursor()
+
+    for index, row in data.iterrows():
+        cursor.execute(
+            """
+            INSERT INTO PRICES (
+                ticker,
+                date,
+                open,
+                high,
+                low,
+                close,
+                volume
+            )
+            Values (
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s
+            )
+            """,
+            (
+                ticker,
+                index,
+                row[("Open", ticker)],
+                row[("High", ticker)],
+                row[("Low", ticker)],
+                row[("Close", ticker)],
+                row[("Volume", ticker)]
+            )
+        )
+        connection.commit()
+        cursor.close()
+
+        break
+

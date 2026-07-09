@@ -16,3 +16,5 @@ def connect_db(host, port, dbname, user, password):
 def close_db(connection):
     connection.close()
     print("Successfully closed connection to PostgreSQL")
+
+
