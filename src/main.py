@@ -1,12 +1,23 @@
+from dotenv import load_dotenv
+import os
+
 import download_data
 import database
 
+load_dotenv()
+
+host = os.getenv("DB_HOST")
+port = os.getenv("DB_PORT")
+dbname = os.getenv("DB_NAME")
+user = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
+
 connection = database.connect_db(
-    'localhost', 
-    '5432',
-    'market_data',
-    'postgres',
-    'Password'
+    host, 
+    port,
+    dbname,
+    user,
+    password
 )
 
 ticker_list = ["AAPL", "MSFT", "NVDA", "TSLA"]
