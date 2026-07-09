@@ -6,7 +6,7 @@ connection = database.connect_db(
     '5432',
     'market_data',
     'postgres',
-    'password'
+    'Password'
 )
 
 ticker = "AAPL"

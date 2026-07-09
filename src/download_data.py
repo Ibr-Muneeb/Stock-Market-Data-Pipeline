@@ -33,6 +33,8 @@ def insert_price_data(connection, data, ticker):
                 %s,
                 %s
             )
+            ON CONFLICT (ticker, date)
+            DO NOTHING;
             """,
             (
                 ticker,
@@ -44,8 +46,7 @@ def insert_price_data(connection, data, ticker):
                 row[("Volume", ticker)]
             )
         )
-        connection.commit()
-        cursor.close()
-
-        break
+    
+    connection.commit()
+    cursor.close()
 
