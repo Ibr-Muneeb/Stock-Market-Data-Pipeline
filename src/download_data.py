@@ -1,4 +1,5 @@
 import yfinance as yf
+import logging
 
 def download_stock_data(ticker, start_date, end_date):
     data = yf.download (
@@ -48,5 +49,6 @@ def insert_price_data(connection, data, ticker):
         )
     
     connection.commit()
+    logging.info(f"Processed {data.shape[0]} rows for {ticker}")
     cursor.close()
 

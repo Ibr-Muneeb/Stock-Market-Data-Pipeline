@@ -1,4 +1,5 @@
 import psycopg
+import logging
 
 def connect_db(host, port, dbname, user, password):
     connection= psycopg.connect(
@@ -9,12 +10,12 @@ def connect_db(host, port, dbname, user, password):
         password = password
     )
 
-    print("Successfully connected to PostgreSQL")
+    logging.info("Successfully connected to PostgreSQL")
     return connection
 
 
 def close_db(connection):
     connection.close()
-    print("Successfully closed connection to PostgreSQL")
+    logging.info("Successfully closed connection to PostgreSQL")
 
 

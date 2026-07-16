@@ -4,6 +4,12 @@ import os
 import download_data
 import database
 
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 load_dotenv()
 
 host = os.getenv("DB_HOST")
@@ -23,7 +29,7 @@ connection = database.connect_db(
 ticker_list = ["AAPL", "MSFT", "NVDA", "TSLA"]
 
 for ticker in ticker_list:
-    print(f"Download {ticker}...")
+    logging.info(f"Download {ticker}...")
     data = download_data.download_stock_data(
         ticker, 
         "2025-01-01", 
