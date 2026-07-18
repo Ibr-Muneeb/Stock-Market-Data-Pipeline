@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import sys
 
 import download_data
 import database
@@ -18,26 +19,34 @@ dbname = os.getenv("DB_NAME")
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 
-connection = database.connect_db(
-    host, 
-    port,
-    dbname,
-    user,
-    password
-)
+connection = None
 
-ticker_list = ["AAPL", "MSFT", "NVDA", "TSLA"]
+try:
+    connection = database.connect_db(
+        host, 
+        port,
+        dbname,
+        user,
+        password
+    )
 
-for ticker in ticker_list:
-    logging.info(f"Download {ticker}...")
-    data = download_data.download_stock_data(
-        ticker, 
-        "2025-01-01", 
-        "2025-07-01"
-    ) 
+    ticker_list = ["AAPL", "MSFT", "NVDA", "TSLA"]
 
-    download_data.insert_price_data(connection, data, ticker)
+    for ticker in ticker_list:
+        logging.info(f"Download {ticker}...")
+        data = download_data.download_stock_data(
+            ticker, 
+            "2025-01-01", 
+            "2025-07-01"
+        ) 
 
+        download_data.insert_price_data(connection, data, ticker)
 
-database.close_db(connection)
+except Exception as e:
+    logging.error(f"Pipeline failed: {e}")
+    sys.exit(1)
+
+finally:
+    if connection: 
+        database.close_db(connection)
 
