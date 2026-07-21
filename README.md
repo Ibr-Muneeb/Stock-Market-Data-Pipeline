@@ -151,3 +151,13 @@ GROUP BY ticker;
 - Support incremental daily updates instead of fixed date ranges
 - Add unit tests for database and download modules
 - Support additional financial data providers
+
+## Screenshots
+
+### Terminal Output
+
+![Terminal Output](docs/terminal_output.png)
+
+### PostgreSQL Database
+
+![Database](docs/pgadmin_table.png)
